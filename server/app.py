@@ -41,7 +41,7 @@ def get_retautrant(id):
 
 @app.route("/restaurants/<int:id>", methods=['DELETE'])
 def delete_retaurant(id):
-    rest = Restaurant.query.get(id)
+    rest = Restaurant.query.filter_by(id=id).first()
     if not rest:
         response_body = {"error": "Restaurant not found"}
         return make_response(response_body,404)
