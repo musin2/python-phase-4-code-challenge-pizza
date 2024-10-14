@@ -61,14 +61,16 @@ def get_pizzas():
 def add_restaurant_pizzas():
     try:
         data = request.get_json()
-        print(f"Received data: {data}")
+
         #extract values from JSON data
         price = data.get("price")
         pizza_id = data.get("pizza_id")
         restaurant_id = data.get("restaurant_id")
+        
         new_rp = RestaurantPizza(price = price,
                                 pizza_id = pizza_id,
                                 restaurant_id = restaurant_id)
+        
         db.session.add(new_rp)
         db.session.commit()
 
@@ -81,7 +83,7 @@ def add_restaurant_pizzas():
     
     except Exception as e:
         db.session.rollback()
-        response_body = {"errors": "validation errors"}
+        response_body = {"errors": e}
         return make_response(response_body,400)
 
 
